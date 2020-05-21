@@ -1,11 +1,13 @@
 <template>
   <div id="app-main">
-    <div class="head"><Header></Header></div>
     <div class="body">
       <div class="menus">
         <Menus></Menus>
       </div>
       <div class="content">
+        <div>
+          <Header></Header>
+        </div>
         <transition name="fade-transform" mode="out-in">
           <router-view />
         </transition>
@@ -35,10 +37,7 @@ body {
   text-align: center;
   color: #2c3e50;
 }
-.head {
-  background: black;
-  color: #fff;
-}
+
 .body {
   display: flex;
 }

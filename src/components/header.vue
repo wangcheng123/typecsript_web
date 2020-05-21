@@ -1,25 +1,81 @@
 <template>
-  <div class="header">
-    <div class="info">
-      <img
-        src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565244103786&di=203bcb9e8131d96b29b63442b45d59aa&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201609%2F20%2F20160920211621_TwCPX.jpeg"
-        alt
-      />
-      <span>admin</span>
+  <div>
+    <div class="header">
+      <div class="info">
+        <img
+          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565244103786&di=203bcb9e8131d96b29b63442b45d59aa&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201609%2F20%2F20160920211621_TwCPX.jpeg"
+          alt
+        />
+        <span>admin</span>
+      </div>
+    </div>
+    <div class="nav">
+      当前路由导航：
+      <span v-if="faroute.parent">
+        <router-link :to="faroute.parent.path">{{faroute.parent.meta.title}}</router-link>/
+      </span>
+      <span>
+        <router-link :to="$route.path">{{$route.meta.title}}</router-link>
+      </span>
+
+      <div>
+        <el-tag
+          :key="tag.path"
+          v-for="tag in dynamicTags"
+          closable
+          @close="handleClose(tag)"
+        >{{tag.meta.title}}</el-tag>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang='tsx' type='text/tsx'>
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { Route } from "vue-router";
 @Component
-export default class Header extends Vue {}
+export default class Header extends Vue {
+  faroute: object = {};
+  mounted() {}
+  public beforeRouteLeave(to: any, from: any, next: any) {
+    next();
+    console.log(to, from);
+  }
+  //标签
+  public dynamicTags: any[] = [];
+  handleClose(tag: object) {
+    this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+  }
+  /**watch */
+  @Watch("$route", { immediate: true })
+  private changeRouter(route: Route) {
+    // console.log(route.matched, route);
+    this.dynamicTags.map(res => {
+      if (res.path == route.path) {
+        this.dynamicTags.splice(this.dynamicTags.indexOf(res), 1);
+      }
+    });
+    this.dynamicTags.push(route);
+
+    route.matched.map(res => {
+      if (route.path == res.path) {
+        this.faroute = res;
+      }
+    });
+    // console.log(this.faroute, this.dynamicTags);
+  }
+}
 </script>
 <style lang="less" scoped>
 .header {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  background: black;
+  color: #fff;
+}
+.nav {
+  text-align: left;
 }
 .info {
   display: flex;
@@ -35,5 +91,9 @@ export default class Header extends Vue {}
   span {
     margin-left: 10px;
   }
+}
+a {
+  text-decoration: none;
+  color: #333;
 }
 </style>

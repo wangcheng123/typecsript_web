@@ -27,10 +27,35 @@ const routes: Array<RouteConfig> = [
           affix: true
         },
         name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+      },
+      {
+        path: '/mangeList',
+        meta: {
+          title: '管理列表',
+          icon: 'guide',
+          affix: true
+        },
+        component: () => import(/* webpackChunkName: "about" */ '../views/mangeList/index.vue'),
+        children: [{
+          path: '/mangeListHome',
+          meta: {
+            title: '管理列表主页',
+            icon: 'guide',
+            affix: true
+          },
+          name: 'mangeListHome',
+          component: () => import(/* webpackChunkName: "about" */ '../views/mangeList/mangeListHome.vue')
+        }, {
+          path: '/mangeListTwo',
+          meta: {
+            title: '管理列表二',
+            icon: 'guide',
+            affix: true
+          },
+          name: 'mangeListTwo',
+          component: () => import(/* webpackChunkName: "about" */ '../views/mangeList/mangeListTwo.vue')
+        }]
       },
       {
         path: '/home',
