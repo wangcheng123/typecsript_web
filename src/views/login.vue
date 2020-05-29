@@ -17,6 +17,7 @@ export default class login extends Vue {
     // this.test();
   }
   submin(){
+    sessionStorage.setItem('token','4545454545')
     this.$router.push({name:"Home"})
   }
   async test() {

@@ -18,7 +18,16 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title;
   }
-  next()
+  if (to.name === 'login') {
+    next()
+    return
+  }
+  if (sessionStorage.getItem('token')) {
+    next()
+  } else {
+    next({ name: 'login' })
+  }
+
 })
 new Vue({
   router,
@@ -27,10 +36,10 @@ new Vue({
 }).$mount('#app')
 //路由守卫
 router.beforeEach((to, from, next) => {
-//  console.log('main.ts', to, from)
+  //  console.log('main.ts', to, from)
   // 未登录且要跳转的页面不是登录页
   //    next({
   //     name: LOGIN_PAGE_NAME // 跳转到登录页
   // })
-  next() 
+  next()
 })

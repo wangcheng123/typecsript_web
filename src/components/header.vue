@@ -19,12 +19,9 @@
       </span>
 
       <div>
-        <el-tag
-          :key="tag.path"
-          v-for="tag in dynamicTags"
-          closable
-          @close="handleClose(tag)"
-        >{{tag.meta.title}}</el-tag>
+        <el-tag :key="tag.path" v-for="tag in dynamicTags" closable @close="handleClose(tag)">
+          <router-link :to="tag.path" :query="tag.query">{{tag.meta.title}}</router-link>
+        </el-tag>
       </div>
     </div>
   </div>
@@ -36,7 +33,9 @@ import { Route } from "vue-router";
 @Component
 export default class Header extends Vue {
   faroute: object = {};
-  mounted() {}
+  mounted() {
+    console.log("header", this.$store.state.menus);
+  }
   public beforeRouteLeave(to: any, from: any, next: any) {
     next();
     console.log(to, from);
@@ -45,6 +44,11 @@ export default class Header extends Vue {
   public dynamicTags: any[] = [];
   handleClose(tag: object) {
     this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+  }
+  /**跳转 */
+  jumfn(datas: object) {
+    console.log(datas);
+    this.$router.push(datas);
   }
   /**watch */
   @Watch("$route", { immediate: true })
@@ -95,5 +99,16 @@ export default class Header extends Vue {
 a {
   text-decoration: none;
   color: #333;
+}
+.nav /deep/ .el-tag {
+  background-color: #409eff;
+  color: #fff;
+  border-color: #409eff;
+  a{
+    color: #fff;
+  }
+ .el-tag__close {
+    color: #fff;
+ }
 }
 </style>

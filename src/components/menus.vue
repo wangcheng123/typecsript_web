@@ -1,13 +1,13 @@
 <template>
   <div class="menu">
-    {{index}}{{$route.path}}
+    <!-- {{index}}{{$route.path}} -->
     <el-menu
     router
      :default-active="$route.path"
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
-      background-color="#545c64"
+      background-color="#304156"
       text-color="#fff"
       active-text-color="#ffd04b"
     >
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import store from"../store/index"
 export default {
   name: "",
   data() {
@@ -59,8 +60,9 @@ export default {
     };
   },
   created(){
-     
+     store.commit('SET_menusList',[1,2])
   },
+ 
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
