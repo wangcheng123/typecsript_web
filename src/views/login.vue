@@ -24,5 +24,5 @@ export default class login extends Vue {
     // let res = await http.post("/aaa", {});
     // console.log(res);
   }
-}
+} 
 </script>
