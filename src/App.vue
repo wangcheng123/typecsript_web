@@ -18,7 +18,10 @@
   text-align: center;
   color: #2c3e50;
 }
-
+body {
+  padding: 0;
+  margin: 0;
+}
 #nav {
   padding: 30px;
 }
@@ -30,5 +33,36 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+/* title样式 */
+.titleInfo {
+  margin: 0;
+  font-size: 16px;
+  text-indent: 20px;
+  font-weight: 500;
+  color: #1d2023;
+  height: 60px;
+  line-height: 60px;
+  border-bottom: 1px solid #e6e9f0;
+  margin-bottom: 20px;
+}
+/* appMain样式 */
+.app-container {
+  min-height: calc(100vh - 188px);
+  margin: 20px;
+  background: white;
+}
+h5{
+  text-align: left;
+}
+.app-container /deep/ .el-input__inner{
+  width: 234px;
+}
+.app-container /deep/ .el-form-item__content{
+  text-align: left;
+}
+.app-container /deep/ .el-form-item__label{
+  font-weight: 700;
 }
 </style>

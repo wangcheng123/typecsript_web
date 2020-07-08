@@ -22,7 +22,7 @@ router.beforeEach((to, from, next) => {
     next()
     return
   }
-  if (sessionStorage.getItem('token')) {
+  if (sessionStorage.getItem('usetoken')) {
     next()
   } else {
     next({ name: 'login' })

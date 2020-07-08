@@ -6,13 +6,30 @@
           src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565244103786&di=203bcb9e8131d96b29b63442b45d59aa&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201609%2F20%2F20160920211621_TwCPX.jpeg"
           alt
         />
-        <span>admin</span>
+        <span
+          style="font-size: 12px;color: rgb(106, 123, 144);cursor: pointer;"
+          @click="password"
+        >需改密码</span>
+        <el-dropdown style="margin-left:70px;">
+          <span class="el-dropdown-link">
+            <span style="color:#fff;" slot="reference">{{user.username}}</span>
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>
+              <span @click.stop="reset" style="width:100%;">退出登陆</span>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
     </div>
     <div class="nav">
       当前路由导航：
       <span v-if="faroute.parent">
-        <router-link :to="faroute.parent.path">{{faroute.parent.meta.title}}</router-link>/
+        <router-link
+          :to="faroute.parent.path"
+          v-if="faroute.parent.meta.title"
+        >{{faroute.parent.meta.title}}/</router-link>
       </span>
       <span>
         <router-link :to="$route.path">{{$route.meta.title}}</router-link>
@@ -30,11 +47,14 @@
 <script lang='tsx' type='text/tsx'>
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { Route } from "vue-router";
+import http from "../utils/request";
 @Component
 export default class Header extends Vue {
   faroute: object = {};
+  visible: boolean = false;
+  public user:object={}
   mounted() {
-    console.log("header", this.$store.state.menus);
+    this.useinfo()
   }
   public beforeRouteLeave(to: any, from: any, next: any) {
     next();
@@ -50,12 +70,29 @@ export default class Header extends Vue {
     console.log(datas);
     this.$router.push(datas);
   }
+  /**退出登陆*/
+  reset() {
+    sessionStorage.clear();
+    this.$router.push({ name: "login" });
+  }
+  /**修改密码 */
+  password() {
+    this.$router.push({ name: "changePassword" });
+  }
+  /**用户信息 */
+   async useinfo(){
+    let res:any = await http.get('/userInfo',{})
+    console.log('user',res)
+    if(res.code==0){
+      this.user= res.data
+    }
+  }
   /**watch */
   @Watch("$route", { immediate: true })
   private changeRouter(route: Route) {
     // console.log(route.matched, route);
     this.dynamicTags.map(res => {
-      if (res.path == route.path) {
+      if (res.path == route.path ||res.path =='/Home' ) {
         this.dynamicTags.splice(this.dynamicTags.indexOf(res), 1);
       }
     });
@@ -86,7 +123,7 @@ export default class Header extends Vue {
   align-items: center;
   width: 300px;
   height: 50px;
-  justify-content: center;
+  justify-content: flex-start;
   img {
     width: 32px;
     height: 32px;
@@ -104,11 +141,12 @@ a {
   background-color: #409eff;
   color: #fff;
   border-color: #409eff;
-  a{
+  margin: 5px;
+  a {
     color: #fff;
   }
- .el-tag__close {
+  .el-tag__close {
     color: #fff;
- }
+  }
 }
 </style>

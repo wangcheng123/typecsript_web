@@ -2,6 +2,7 @@
   <div class="menu">
     <!-- {{index}}{{$route.path}} -->
     <el-menu
+    style="height: 100vh"
     router
      :default-active="$route.path"
       class="el-menu-vertical-demo"

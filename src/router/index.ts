@@ -20,6 +20,15 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AppMain.vue'),
     children: [
       {
+        path: '/changePassword',
+        meta: {
+          title: '修改密码',
+          icon: 'guide',
+        },
+        name: 'changePassword',
+        component: () => import(/* webpackChunkName: "about" */ '../views/changePassword.vue')
+      },
+      {
         path: '/about',
         meta: {
           title: '关于我们',
