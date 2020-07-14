@@ -5,30 +5,18 @@ import router from './router'
 import store from './store'
 import * as Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-
+import "./modules/use"
 import { Component } from 'vue-property-decorator';
+//全局组件
+import components from "@/components/index"
 Component.registerHooks([
   'beforeRouteEnter',
   'beforeRouteLeave',
   'beforeRouteUpdate',
 ])
 Vue.use(Element)
+Vue.use(components)
 Vue.config.productionTip = false
-router.beforeEach((to, from, next) => {
-  if (to.meta.title) {
-    document.title = to.meta.title;
-  }
-  if (to.name === 'login') {
-    next()
-    return
-  }
-  if (sessionStorage.getItem('usetoken')) {
-    next()
-  } else {
-    next({ name: 'login' })
-  }
-
-})
 new Vue({
   router,
   store,

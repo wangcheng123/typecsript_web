@@ -1,64 +1,91 @@
 <template>
   <div>
     <div class="header">
+      <img
+        src="https://mmk-sxy.oss-cn-beijing.aliyuncs.com/img/new_org/ic_field.png"
+        style="width:20px;"
+        alt
+        @click="changemenu"
+      />
       <div class="info">
         <img
-          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565244103786&di=203bcb9e8131d96b29b63442b45d59aa&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201609%2F20%2F20160920211621_TwCPX.jpeg"
+          class="icon"
+          src="https://mmk-sxy.oss-cn-beijing.aliyuncs.com/img/new_org/ic_search.png"
+          alt
+        />
+        <img
+          class="icon"
+          src="https://mmk-sxy.oss-cn-beijing.aliyuncs.com/img/new_org/ic_news.png"
+          alt
+        />
+        <img
+          @click="password"
+          src="https://mmk-sxy.oss-cn-beijing.aliyuncs.com/img/new_org/head.png"
           alt
         />
         <span
           style="font-size: 12px;color: rgb(106, 123, 144);cursor: pointer;"
           @click="password"
-        >需改密码</span>
-        <el-dropdown style="margin-left:70px;">
+        >{{$store.state.use.useinfo.realName}}</span>
+
+        <!--  <el-dropdown style="margin-left:70px;">
           <span class="el-dropdown-link">
-            <span style="color:#fff;" slot="reference">{{user.username}}</span>
-            <i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
+            
+           <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>-->
+        <!-- <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
               <span @click.stop="reset" style="width:100%;">退出登陆</span>
             </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+          </el-dropdown-menu> 
+        </el-dropdown>-->
       </div>
     </div>
     <div class="nav">
-      当前路由导航：
       <span v-if="faroute.parent">
-        <router-link
-          :to="faroute.parent.path"
-          v-if="faroute.parent.meta.title"
-        >{{faroute.parent.meta.title}}/</router-link>
+        <router-link :to="faroute.parent.path" v-if="faroute.parent.meta.title">
+          {{faroute.parent.meta.title}}
+          <b style="font-weight: 500; padding: 0 8px;">/</b>
+        </router-link>
       </span>
       <span>
         <router-link :to="$route.path">{{$route.meta.title}}</router-link>
       </span>
-
+      <h5 style="color: #303133;font-size: 18px;">{{$route.meta.title}}</h5>
+      <!-- 
       <div>
         <el-tag :key="tag.path" v-for="tag in dynamicTags" closable @close="handleClose(tag)">
           <router-link :to="tag.path" :query="tag.query">{{tag.meta.title}}</router-link>
         </el-tag>
-      </div>
+      </div>-->
     </div>
   </div>
 </template>
 
 <script lang='tsx' type='text/tsx'>
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch, Emit } from "vue-property-decorator";
 import { Route } from "vue-router";
 import http from "../utils/request";
 @Component
 export default class Header extends Vue {
   faroute: object = {};
   visible: boolean = false;
-  public user:object={}
-  mounted() {
-    this.useinfo()
+  public user: object = {};
+  //菜单开关
+  menubtn: boolean = false;
+  created() {
+    // this.saveuseinfoFN();
+    // this.useinfo();
   }
-  public beforeRouteLeave(to: any, from: any, next: any) {
-    next();
-    console.log(to, from);
+  mounted() {}
+ 
+
+  //菜单开关
+
+  @Emit("childfun") send(msg: Boolean) {}
+  changemenu() {
+    this.menubtn = !this.menubtn;
+    this.send(this.menubtn);
   }
   //标签
   public dynamicTags: any[] = [];
@@ -80,19 +107,16 @@ export default class Header extends Vue {
     this.$router.push({ name: "changePassword" });
   }
   /**用户信息 */
-   async useinfo(){
-    let res:any = await http.get('/userInfo',{})
-    console.log('user',res)
-    if(res.code==0){
-      this.user= res.data
-    }
+  async useinfo() {
+    console.log(this.$store.state)
+    this.user = this.$store.state.use.useinfo;
   }
   /**watch */
   @Watch("$route", { immediate: true })
   private changeRouter(route: Route) {
     // console.log(route.matched, route);
     this.dynamicTags.map(res => {
-      if (res.path == route.path ||res.path =='/Home' ) {
+      if (res.path == route.path || res.path == "/Home") {
         this.dynamicTags.splice(this.dynamicTags.indexOf(res), 1);
       }
     });
@@ -110,23 +134,38 @@ export default class Header extends Vue {
 <style lang="less" scoped>
 .header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  padding: 0 24px;
   align-items: center;
-  background: black;
-  color: #fff;
+  background: #fff;
+  color: #000000;
+  height: 46px;
+  border-bottom: 8px solid #e9e9e9;
 }
 .nav {
   text-align: left;
+  height: 92px;
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  line-height: 22px;
+  padding: 16px 0 0 24px;
+  a {
+    color: #909399;
+  }
 }
 .info {
   display: flex;
   align-items: center;
-  width: 300px;
-  height: 50px;
-  justify-content: flex-start;
+  // width: 100px;
+  .icon {
+    width: 14px;
+    height: 14px;
+    margin-right: 30px;
+  }
   img {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
   }
   span {

@@ -22,7 +22,7 @@ const routes: Array<RouteConfig> = [
       {
         path: '/changePassword',
         meta: {
-          title: '修改密码',
+          title: '个人中心',
           icon: 'guide',
         },
         name: 'changePassword',
@@ -56,13 +56,13 @@ const routes: Array<RouteConfig> = [
           name: 'mangeListHome',
           component: () => import(/* webpackChunkName: "about" */ '../views/mangeList/mangeListHome.vue')
         }, {
-          path: '/mangeListTwo',
+          path: '/vipIndex',
           meta: {
             title: '管理列表二',
             icon: 'guide',
             affix: true
           },
-          name: 'mangeListTwo',
+          name: 'vipIndex',
           component: () => import(/* webpackChunkName: "about" */ '../views/mangeList/mangeListTwo.vue')
         }]
       },

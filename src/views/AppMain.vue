@@ -2,15 +2,17 @@
   <div id="app-main">
     <div class="body">
       <div class="menus">
-        <Menus></Menus>
+        <Menus :menubtn="menubtn"></Menus>
       </div>
       <div class="content">
-        <div>
-          <Header></Header>
+        <div style="background:#fff;">
+          <Header @childfun="childfun"></Header>
         </div>
-        <transition name="fade-transform" mode="out-in">
-          <router-view />
-        </transition>
+        <div class="App_main">
+          <transition name="fade-transform" mode="out-in">
+            <router-view />
+          </transition>
+        </div>
       </div>
     </div>
   </div>
@@ -22,6 +24,17 @@ export default {
   components: {
     Menus,
     Header
+  },
+  data() {
+    return {
+      menubtn: false
+    };
+  },
+  methods: {
+    childfun(data) {
+      console.log(data);
+      this.menubtn = data
+    }
   }
 };
 </script>
@@ -43,6 +56,11 @@ body {
 }
 .content {
   flex: 1;
+  background: #f4f6f9;
+}
+.App_main {
+  background: #fff;
+  margin: 20px;
 }
 #nav {
   padding: 30px;
@@ -53,16 +71,17 @@ body {
   color: #2c3e50;
 }
 .menus {
-  width: 245px;
+  max-width: 245px;
+  min-height: 100vh;
 }
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-  
+
 /*fade-transform*/
 .fade-transform-leave-active,
 .fade-transform-enter-active {
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
 .fade-transform-enter {
@@ -74,5 +93,4 @@ body {
   opacity: 0;
   transform: translateX(30px);
 }
-
 </style>

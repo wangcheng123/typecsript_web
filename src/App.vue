@@ -56,13 +56,19 @@ body {
 h5{
   text-align: left;
 }
-.app-container /deep/ .el-input__inner{
-  width: 234px;
+
+.app-container /deep/ .el-input__inner , .el-input,.el-textarea{
+  width: 234px !important;
+  margin-right:10px ;
 }
 .app-container /deep/ .el-form-item__content{
   text-align: left;
 }
 .app-container /deep/ .el-form-item__label{
   font-weight: 700;
+}
+.app-container .el-button--primary{
+      background-color: #437EEE;
+    border-color: #437EEE;
 }
 </style>
