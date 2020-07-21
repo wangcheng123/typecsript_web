@@ -1,12 +1,13 @@
 <template>
   <div class="Mytable">
-    <el-table :data="tdata" border style="width: 100%" height="650">
-      <el-table-column type="index" label="#" width="50"></el-table-column>
+    <el-table :data="tdata" border style="width: 100%;" height="650">
+      <el-table-column type="index" fixed label="#" width="50"></el-table-column>
       <el-table-column
-        :prop="index"
-        :label="item"
+        :prop="item.val"
+        :label="item.lab"
         v-for="(item,index) in thead"
         :key="index"
+        :width="item.width?item.width:'auto'" 
         align="center"
       ></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="200" v-if="status">
@@ -69,10 +70,23 @@ export default class tableComponent extends Vue {
 }
 </script>
 <style scoped>
+.Mytable{
+  width: 100%;
+}
 .Mytable /deep/ .el-input {
   width: 100px !important;
 }
 .Mytable /deep/ .el-pagination__editor.el-input {
   width: 50px !important;
+}
+@media screen and (max-width: 1281px) {
+  .Mytable {
+    width: 900px;
+  }
+}
+@media screen and (max-width: 1025px) {
+  .Mytable {
+    width: 800px;
+  }
 }
 </style>

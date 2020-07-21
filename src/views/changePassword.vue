@@ -2,8 +2,12 @@
   <div class="app-container">
     <!-- 修改密码 -->
     <h5 class="titleInfo">
-      <span>基本信息</span>
-      <img @click="$router.go(-1)" src="https://mmk-sxy.oss-cn-beijing.aliyuncs.com/img/new_org/ic_return.png" alt />
+      <span style="margin-left:-15px;">基本信息</span>
+      <img
+        @click="$router.go(-1)"
+        src="https://mmk-sxy.oss-cn-beijing.aliyuncs.com/img/new_org/ic_return.png"
+        alt
+      />
     </h5>
     <div class="useinfo">
       <div class="head">
@@ -28,16 +32,16 @@
         </el-upload>
       </div>
       <div class="formDev">
-        <el-form ref="params" :model="params" label-width="80px">
+        <el-form ref="params" :model="params" :rules="rules" label-width="80px">
           <el-form-item label="姓名">
             <el-input v-model="params.realName" disabled></el-input>
           </el-form-item>
-          <el-form-item label="手机号">
+          <el-form-item label="手机号" prop="username">
             <el-input v-model="params.username" disabled></el-input>
           </el-form-item>
-          <el-form-item label="密码">
-            <div style="display:flex;">
-              <el-input value="*********" disabled></el-input>
+          <el-form-item label="密码" prop="username">
+            <div>
+              <el-input value="*********" class="paswwer" disabled style="width:360px!important;"></el-input>
               <el-button type="primary" @click="dialogVisible=true">修改密码</el-button>
             </div>
           </el-form-item>
@@ -143,7 +147,8 @@ export default {
       rules: {
         newPassword: [
           { required: true, validator: passwordReg, trigger: "blur" }
-        ]
+        ],
+        username: [{ required: true, validator: passwordReg, trigger: "blur" }]
       }
     };
   },
@@ -173,7 +178,7 @@ export default {
       }
       let res = await http.post(
         "/com.mmk.reservation.api.AdminMsgProvider/1.0.0/checkVerify.html",
-        { phone: this.form.oldPassword, verify: this.form.code }
+        { phone: this.$store.state.use.useinfo.phone, verify: this.form.code }
       );
       if (res.code != 0) {
         this.$message.warning(res.msg);
@@ -195,9 +200,13 @@ export default {
         this.$message.warning("手机号能空");
         return;
       }
+      // console.log(this.$store.state.use)
       let res = await http.post("/organization/sendMsg", {
-        phone: this.form.oldPassword
+        phone: this.$store.state.use.useinfo.phone
       });
+      if (res.code == 0) {
+        this.$message.warning(res.msg);
+      }
       this.timer();
     },
     //发送手机验证码倒计时
@@ -292,8 +301,8 @@ export default {
 }
 .formDev .el-button + .el-button {
   margin-left: 90px;
-  margin-top: 70px;
-  margin-bottom: 82px;
+  margin-top: 10%;
+  margin-bottom: 20px;
 }
 .formDev .el-button {
   width: 100px;
@@ -310,11 +319,14 @@ export default {
   width: 468px !important;
   height: 32px;
 }
-.diaform /deep/ .el-input__inner,
-.el-input,
+.diaform /deep/ .el-input__inner,.diaform 
+.el-input,.diaform 
 .el-textarea {
   width: 100% !important;
 }
+ .formDev .paswwer /deep/ .el-input__inner{
+   width: 356px !important;
+ }
 .diaform .el-form {
   padding: 0;
 }
@@ -337,6 +349,9 @@ h5 {
   justify-content: space-between;
   align-items: center;
   border: none;
+}
+.head {
+  margin-bottom: 40px;
 }
 .head img {
   width: 80px;

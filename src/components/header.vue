@@ -1,12 +1,13 @@
 <template>
   <div>
     <div class="header">
-      <img
+      <!-- <img
         src="https://mmk-sxy.oss-cn-beijing.aliyuncs.com/img/new_org/ic_field.png"
         style="width:20px;"
         alt
         @click="changemenu"
-      />
+      /> -->
+      <i class="el-icon-s-fold"   style="font-size:20px;" @click="changemenu"></i>
       <div class="info">
         <img
           class="icon"
@@ -35,7 +36,7 @@
         </span>-->
         <!-- <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <span @click.stop="reset" style="width:100%;">退出登陆</span>
+              <span @click.stop="reset" style="width:100%;">退出登录</span>
             </el-dropdown-item>
           </el-dropdown-menu> 
         </el-dropdown>-->
@@ -51,7 +52,7 @@
       <span>
         <router-link :to="$route.path">{{$route.meta.title}}</router-link>
       </span>
-      <h5 style="color: #303133;font-size: 18px;">{{$route.meta.title}}</h5>
+      <h5 style="color: #303133;font-size: 18px;margin:10px;margin-left: 0;">{{$route.meta.title}}</h5>
       <!-- 
       <div>
         <el-tag :key="tag.path" v-for="tag in dynamicTags" closable @close="handleClose(tag)">
@@ -97,7 +98,7 @@ export default class Header extends Vue {
     console.log(datas);
     this.$router.push(datas);
   }
-  /**退出登陆*/
+  /**退出登录*/
   reset() {
     sessionStorage.clear();
     this.$router.push({ name: "login" });
@@ -140,11 +141,11 @@ export default class Header extends Vue {
   background: #fff;
   color: #000000;
   height: 46px;
-  border-bottom: 8px solid #e9e9e9;
+  border-bottom: 1px solid #e9e9e9;
 }
 .nav {
   text-align: left;
-  height: 92px;
+  height: 74px;
   font-size: 14px;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;

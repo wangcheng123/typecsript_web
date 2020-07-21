@@ -50,7 +50,7 @@ body {
 /* appMain样式 */
 .app-container {
   min-height: calc(100vh - 188px);
-  margin: 20px;
+  /* margin: 20px; */
   background: white;
 }
 h5{

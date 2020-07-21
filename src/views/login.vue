@@ -10,6 +10,7 @@
           src="https://mmk-sxy.oss-cn-beijing.aliyuncs.com/img/new_org/bg_pic.png"
           class="img"
           alt
+          style="display:block;height: 100%;flex: 1;"
           srcset
         />
         <el-form
@@ -19,10 +20,10 @@
           class="login-form"
           label-width="100px"
         >
-          <p>机构登陆</p>
+          <p>机构登录</p>
           <div class="xform">
             <el-form-item prop="username" label>
-              <el-input placeholder="请输入手机号" v-if="!tflat" v-model="loginForm.username">
+              <el-input placeholder="请输入手机号" style="width:100% !important;" v-if="!tflat" v-model="loginForm.username">
                 <img
                   slot="prefix"
                   src="https://mmk-sxy.oss-cn-beijing.aliyuncs.com/img/new_org/account.png"
@@ -44,12 +45,13 @@
                 />
               </el-input>
             </el-form-item>
-            <el-form-item prop="password" v-if="!tflat">
+            <el-form-item  v-if="!tflat">
               <el-input
                 placeholder="请输入密码"
                 v-model="loginForm.password"
                 @keyup.enter.native="submin"
                 show-password
+                style="width:100% !important;"
               >
                 <img
                   slot="prefix"
@@ -89,7 +91,7 @@
               </div>
             </el-form-item>
             <div class="code" v-if="!tflat">
-              <span @click="tflat=true">验证码登陆</span>
+              <span @click="tflat=true">验证码登录</span>
             </div>
             <div class="code" v-if="tflat" @click="tflat=false">账号密码登录</div>
             <div style="width:100%;text-align:right;margin-top: 30px;">
@@ -104,7 +106,7 @@
           </div>
         </el-form>
       </div>
-      <p class="cban">copyright © 2020 美美咖科技技术部出品</p>
+      <p class="cban">copyright © 2020 武汉悦拼悦美网络科技有限公司</p>
     </div>
     <!-- {{input}}
     <el-input placeholder="请输入密码" v-model="input" show-password></el-input>
@@ -182,11 +184,12 @@ export default class login extends Vue {
     let el: any = this.$refs["loginForm"];
     el.validate(async (valid: any) => {
       if (valid) {
-        //普通登陆
+        //普通登录
         let sidentify: any = this.$refs["sidentify"];
         let url = "/organization/login";
         if (this.tflat) {
-          //验证登陆
+          //验证登录
+          console.log(this.loginForm.number,sidentify.identifyCode)
           if (this.loginForm.number != sidentify.identifyCode) {
             this.$message.warning("图形验证输入错误！");
             return;
@@ -197,7 +200,7 @@ export default class login extends Vue {
         // console.log(res);
         if (res.code == 0) {
           sessionStorage.setItem("usetoken", res.data.token);
-          sessionStorage.setItem("use",JSON.stringify( res.data));
+          sessionStorage.setItem("use", JSON.stringify(res.data));
           // https://mmkapp.oss-cn-beijing.aliyuncs.com/
           sessionStorage.setItem(
             "imgUrl",
@@ -247,7 +250,7 @@ export default class login extends Vue {
   cursor: pointer;
 }
 .login {
-  height: 580px;
+  max-height: 580px;
   background: #fff;
   border-radius: 30px;
   max-width: 1140px;
@@ -255,6 +258,8 @@ export default class login extends Vue {
   display: flex;
   overflow: hidden;
   box-shadow: 0px 16px 42px 3px rgba(68, 120, 237, 0.72);
+      width: 75%;
+  height: 70%;
   /deep/ .el-form-item__content {
     margin: 0 !important;
   }
@@ -292,6 +297,7 @@ export default class login extends Vue {
     font-weight: 400;
     color: rgba(255, 255, 255, 0.45);
     line-height: 20px;
+    font-size: 12px;
   }
   .title {
     font-size: 32px;
@@ -299,8 +305,10 @@ export default class login extends Vue {
     color: #ffffff;
     line-height: 45px;
     padding: 0;
-    margin-top: 70px;
-    margin-bottom: 55px;
+    // margin-top: 70px;
+    // margin-bottom: 55px;
+    margin-top: 3%;
+    margin-bottom: 3%;
   }
   .login-form {
     position: relative;

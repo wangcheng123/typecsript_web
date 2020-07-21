@@ -9,7 +9,7 @@ const routes: Array<RouteConfig> = [
     path: '/login',
     name: 'login',
     meta: {
-      title: '登陆',
+      title: '登录',
       icon: 'guide',
       affix: true
     },

@@ -1,6 +1,6 @@
 <template>
   <div class="contain">
-    <Mytable :tdata="tableData" :total="total" ref="Mytable" :thead="thead" :status="['收取尾款','线下收款']"></Mytable>
+    <Mytable :tdata="tableData" :total="total" ref="Mytable" :thead="thead"></Mytable>
   </div>
 </template>
 
@@ -28,7 +28,18 @@ export default class mangeListHome extends Vue {
     console.log(res);
     if (res.code == 0) {
       this.tableData = res.data.list;
-      this.thead = res.data.t_head;
+      let arr =[];
+      for(let item in  res.data.t_head){
+        // console.log(item)
+        let obj={
+          lab:res.data.t_head[item],
+          val : item,
+          width: item=="project_name"?300:'auto'
+        }
+        arr.push(obj)
+      }
+      console.log(arr)
+      this.thead = arr;
       this.total = res.data.total
     }
   }

@@ -4,7 +4,7 @@
       <div class="menus">
         <Menus :menubtn="menubtn"></Menus>
       </div>
-      <div class="content">
+      <div class="content" :style="menubtn?'margin-left: 70px;':''">
         <div style="background:#fff;">
           <Header @childfun="childfun"></Header>
         </div>
@@ -57,10 +57,13 @@ body {
 .content {
   flex: 1;
   background: #f4f6f9;
+  margin-left:230px ;
 }
 .App_main {
   background: #fff;
   margin: 20px;
+  padding: 20px;
+  min-height: calc(100vh - 188px);
 }
 #nav {
   padding: 30px;
@@ -72,12 +75,15 @@ body {
 }
 .menus {
   max-width: 245px;
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-
+.el-pagination{
+  padding: 20px;
+  text-align: right;
+}
 /*fade-transform*/
 .fade-transform-leave-active,
 .fade-transform-enter-active {

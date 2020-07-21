@@ -84,7 +84,7 @@ export default {
         {
           component: "Layout",
           id: 1,
-          meta: { title: "订单管理",icon: "user" },
+          meta: { title: "订单管理", icon: "user" },
           children: [
             {
               component: "mangeListHome",
@@ -122,6 +122,13 @@ export default {
 <style lang="less">
 .menu {
   height: 100%;
+  position: fixed;
+  // font-size: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1001;
+  overflow: hidden;
   /deep/ .el-submenu__title,
   /deep/ .el-menu-item {
     text-align: left;

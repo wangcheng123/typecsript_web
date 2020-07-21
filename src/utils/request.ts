@@ -3,6 +3,8 @@ import { Message, MessageBox } from 'element-ui'
 const baseURLOnly = {
     java: 'http://mpingweb.ameimeika.com/api',
     php: 'http://test.appadmin3.ameimeika.com/api'
+    // java: 'http://adminmping.ameimeika.com/api',
+    // php: 'http://appadmin3.ameimeika.com/api'
 }
 
 export const service = axios.create({
